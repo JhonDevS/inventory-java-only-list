@@ -1,7 +1,5 @@
 package clases;
 
-import interfaces.Book;
-
 public class Library implements interfaces.Library{
     private final LinkedList<Person> customers;
     private final LinkedList<Book> books;
@@ -11,19 +9,16 @@ public class Library implements interfaces.Library{
         books = new LinkedList<>();
     }
 
-    @Override
-    public void lendBook(String name, Book book) {
-        Person customer = findCustomer(name);
-        if (customer == null) {
-            System.out.println("Customer not found");
-            return;
-        }
+
+    public void lendBook(Person customer, Book book, int quantity) {
         customer.addBook(book);
+        findBook(book.getIsbn()).setAvailableQuantity(quantity);
     }
 
-    @Override
-    public void returnBook(interfaces.Person persona, Book book) {
 
+    public void returnBook(Person customer, Book book) {
+        customer.removeBook(book);
+        book.setAvailableQuantity();
     }
 
     public Person findCustomer(String name) {
@@ -31,7 +26,17 @@ public class Library implements interfaces.Library{
     }
 
     public Book findBook(String title) {
-        return null;
+        return books.searchNodeBook(title);
+    }
+
+    @Override
+    public void removeCustomer(Person customer) {
+        customers.remove(customer);
+    }
+
+    @Override
+    public void removeBook(Book book) {
+        books.remove(book);
     }
 
     public void addCustomer(Person person) {
@@ -39,9 +44,6 @@ public class Library implements interfaces.Library{
     }
     public void addBook(Book book) {
         books.add(book);
-    }
-    public void printCustomers() {
-        customers.print();
     }
 
     @Override
@@ -51,4 +53,6 @@ public class Library implements interfaces.Library{
                 ", books=" + books.toString() +
                 '}';
     }
+
+
 }

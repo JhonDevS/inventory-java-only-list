@@ -17,11 +17,18 @@ public class LinkedList<T> {
         }
     }
 
-    @Override
-    public String toString() {
-        return "LinkedList{" +
-                "head=" + head +
-                '}';
+    public StringBuilder AllNodes() {
+        Node<T> temp = head;
+        StringBuilder names = new StringBuilder();
+        while (temp != null) {
+            if (temp.data instanceof Person person) {
+                names.append(person.toString());
+            } else if (temp.data instanceof Book book) {
+                names.append(book.toString());
+            }
+            temp = temp.next;
+        }
+        return names;
     }
 
     public void add(T data) {
@@ -56,35 +63,25 @@ public class LinkedList<T> {
         temp = null;
     }
 
-    public void print() {
+    public Person searchNode(String dni) {
         Node<T> temp = head;
         while (temp != null) {
             if (temp.data instanceof Person person) {
-                System.out.println(person.toString());
-            } else if (temp.data instanceof Book book) {
-                System.out.println(book.toString());
-            }
-            temp = temp.next;
-        }
-    }
-
-    public Node<T> searchNode(T data) {
-        Node<T> temp = head;
-        while (temp != null) {
-            if (temp.data == data || temp.data.equals(data)) {
-                return temp;
+                if (person.getDni().equalsIgnoreCase(dni)) {
+                    return (Person) temp.data;
+                }
             }
             temp = temp.next;
         }
         return null;
     }
 
-    public Person searchNode(String name) {
+    public Book searchNodeBook(String isbn) {
         Node<T> temp = head;
         while (temp != null) {
-            if (temp.data instanceof Person person) {
-                if (person.getName().equals(name)) {
-                    return (Person) temp.data;
+            if (temp.data instanceof Book book) {
+                if (book.getIsbn().equalsIgnoreCase(isbn)) {
+                    return (Book) temp.data;
                 }
             }
             temp = temp.next;
