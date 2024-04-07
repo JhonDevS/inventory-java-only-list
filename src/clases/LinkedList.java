@@ -22,9 +22,9 @@ public class LinkedList<T> {
         StringBuilder names = new StringBuilder();
         while (temp != null) {
             if (temp.data instanceof Person person) {
-                names.append(person.toString());
+                names.append(person);
             } else if (temp.data instanceof Book book) {
-                names.append(book.toString());
+                names.append(book);
             }
             temp = temp.next;
         }
